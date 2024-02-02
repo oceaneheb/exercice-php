@@ -97,7 +97,7 @@ function addCategory($name_cat) {
     }
 }
 
-//AJOUTER LA LISTE DES CATEGORIES
+//RECUPERER ET AFFICHER LA LISTE DES CATEGORIES
 function displayCategories() {
     try {
 
@@ -105,7 +105,7 @@ function displayCategories() {
         $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         //Préparer la requête 
-        $req = $bdd->prepare('SELECT (name_cat) FROM category');
+        $req = $bdd->prepare('SELECT name_cat FROM category');
 
         //Exécuter la requête
         $req->execute();
@@ -144,6 +144,29 @@ function addTask($nom_task, $content_task, $date_task, $id_cat, $id_user) {
 
     } catch (Exception $error) {
         return $error->getMessage();
+    }
+}
+// CREER LE BOUTON CHOIX DES CATEGORIES
+function choiceCategories() {
+    try {
+
+        //Connexion à la BDD
+        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+        //Préparer la requête 
+        $req = $bdd->prepare('SELECT (name_cat) FROM category');
+
+        //Exécuter la requête
+        $req->execute();
+
+        //Récupérer la liste de toutes les catégories
+        $listCategories = $req->fetchAll(PDO::FETCH_ASSOC);
+
+        return $listCategories;
+
+    } catch (Exception $error) {
+        $message = $error->getMessage();
+        return $message;
     }
 }
 

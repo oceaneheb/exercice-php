@@ -7,6 +7,10 @@
             <input type="text" name="content_task" placeholder="Contenu de la tâche">
             <input type="date" name="date_task" placeholder="Date">
             <input type="text" name="id_cat" placeholder="Catégorie">
+            <label for="list_categories">Choisir la catégorie :</label> 
+            <select name="list_categories" id="list_categories"> 
+                <?= $listCategories ?>
+            </select>
 
             <input type="submit" name="submitTask" value="Ajouter la tâche">
 
