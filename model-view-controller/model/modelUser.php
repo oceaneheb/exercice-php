@@ -74,4 +74,77 @@ function modifyProfil($name_user, $first_name_user, $id) {
     }
 }
 
+//AJOUTER UNE CATEGORIE
+
+function addCategory($name_cat) {
+    try {
+        //Connexion à la BDD
+        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+        //Préparer la requête 
+        $req = $bdd->prepare('INSERT INTO category (name_cat) VALUES (?)');
+
+        //Bind de Param
+        $req->bindParam(1,$name_cat,PDO::PARAM_STR);
+
+        //Exécuter la requête
+        $req->execute();
+
+        return "Ajout de la catégorie $name_cat";
+
+    } catch (Exception $error) {
+        return $error->getMessage();
+    }
+}
+
+//AJOUTER LA LISTE DES CATEGORIES
+function displayCategories() {
+    try {
+
+        //Connexion à la BDD
+        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+        //Préparer la requête 
+        $req = $bdd->prepare('SELECT (name_cat) FROM category');
+
+        //Exécuter la requête
+        $req->execute();
+
+        //Récupérer la liste de toutes les catégories
+        $listCategories = $req->fetchAll(PDO::FETCH_ASSOC);
+
+        return $listCategories;
+
+    } catch (Exception $error) {
+        $message = $error->getMessage();
+        return $message;
+    }
+}
+
+//AJOUTER UNE TACHE
+function addTask($nom_task, $content_task, $date_task, $id_cat, $id_user) {
+    try {
+        //Connexion à la BDD
+        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+        //Préparer la requête 
+        $req = $bdd->prepare('INSERT INTO task (nom_task, content_task, date_task, id_cat, id_user) VALUES (?,?,?,?,?)');
+
+        //Bind de Param
+        $req->bindParam(1,$nom_task,PDO::PARAM_STR);
+        $req->bindParam(2,$content_task,PDO::PARAM_STR);
+        $req->bindParam(3,$date_task,PDO::PARAM_STR);
+        $req->bindParam(4,$id_cat,PDO::PARAM_INT);
+        $req->bindParam(5,$id_user,PDO::PARAM_INT);
+
+        //Exécuter la requête
+        $req->execute();
+
+        // return "Ajout de la catégorie $name_cat";
+
+    } catch (Exception $error) {
+        return $error->getMessage();
+    }
+}
+
 ?>

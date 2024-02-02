@@ -41,6 +41,6 @@
     include './controlerNav.php';
 
     include './vue/header.php';
-    include './vue/nav.php'; //-> affiche la navbar
+    include './vue/nav.php';
     include './vue/vueCompte.php';
 ?>

@@ -56,7 +56,7 @@ if(isset($_POST['submit'])){
 
             //ETAPE 8 Du Diagramme de Sequence : vérifier l'existence de l'utilidateur, et vérifier le mot de passe
             // if(!empty($data) and password_verify($password,$data[0]['mdp_user'])){
-            if(!empty($data)){
+            if(!empty($data) and $password === $data[0]['mdp_user']){
             
                 //ETAPE 9 Du Diagramme de Sequence : enregistrer les datas en $_SESSION
                 $_SESSION['id']=$data[0]['id_user'];
@@ -71,8 +71,9 @@ if(isset($_POST['submit'])){
                 //Redirection vers index.php pour rafraîchir la page
                 header('refresh:0');
 
+                
             }else{
-                $message = "Utilisateur ou Mot de Passe incorrecte.";
+                $message = "Login ou Mot de Passe incorrect.";
             }
         }
 
